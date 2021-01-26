@@ -119,7 +119,7 @@ function updateMelee(gameSettings)
   {
     globalActivity = {
     details : config["menu_text"],
-    startTimestamp : new Date(),
+    startTimestamp : startTime,
     largeImageKey : 'menu',
     }
 }
@@ -180,4 +180,4 @@ stream.connection.on("statusChange", (status) => {
   });
 
 client.login({ clientId }).catch(console.error);
-stream.start("127.0.0.1", Ports.DEFAULT).then(() => {console.log("Connected to Slippi Relay");}).catch("Couldn't find a dolphin instance!");
+stream.start("127.0.0.1", Ports.DEFAULT).then(() => {console.log("Connected to Slippi Relay"); startTime = new Date()}).catch("Couldn't find a dolphin instance!");
