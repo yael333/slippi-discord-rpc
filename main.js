@@ -1,4 +1,4 @@
-const { SlpRealTime, SlpLiveStream } = require("@vinceau/slp-realtime");
+const { SlpRealTime, SlpLiveStream, ConnectionStatus} = require("@vinceau/slp-realtime");
 const { Ports } = require("@slippi/slippi-js");
 const RPC = require("discord-rpc");
 const fs = require("fs");
@@ -98,7 +98,6 @@ function updateMelee(gameSettings)
     {
       for (let player of gameSettings.players)
       {
-        console.log(player.nametag)
         if (characters.indexOf(character[0]) == player.characterId && (character[1]===null || character[1] == player.characterColor))
         {
           player_character = player.characterId
@@ -119,7 +118,7 @@ function updateMelee(gameSettings)
   else
   {
     globalActivity = {
-    details : `Chilling in the menu`,
+    details : config["menu_text"],
     startTimestamp : new Date(),
     largeImageKey : 'menu',
     }
@@ -136,24 +135,17 @@ function updateStocks(stocks)
     globalActivity["state"] = `Stocks: ${outputStocks.join(" - ")}`
     updatePresence(globalActivity)
 }
+const config = JSON.parse(fs.readFileSync("./config.json"))
 
 const clientId = '635924792893112320';
 const client = new RPC.Client({ transport: 'ipc' });
 
-globalActivity = {
-  details : `Chilling in the menu`,
-  startTimestamp : new Date(),
-  largeImageKey : 'menu',
-  }
+globalActivity = {}
 
 client.on('ready', () => {
 console.log("Connected to discord!")
-updatePresence(globalActivity)
+updateMelee(null)
 });
-
-
-
-const config = JSON.parse(fs.readFileSync("./config.json"))
 
 
 const stream = new SlpLiveStream("dolphin");
@@ -178,6 +170,13 @@ realtime.stock.countChange$.subscribe((payload) => {
 realtime.game.end$.subscribe(() => {
     updateMelee(null)
     stocks = []
+  });
+
+stream.connection.on("statusChange", (status) => {
+    if (status === ConnectionStatus.DISCONNECTED) {
+      updateMelee(null)
+      stocks = []
+    }
   });
 
 client.login({ clientId }).catch(console.error);

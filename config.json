@@ -1,4 +1,5 @@
 {
     "characters" : [["Ice Climbers", 0], ["Falco", 2], ["Captain Falcon", null]],
-    "ssbu_logos" : false
+    "ssbu_logos" : false,
+    "menu_text" : "Menu beep boop"
 }
