@@ -99,7 +99,7 @@ function updateMelee(gameSettings)
       for (let player of gameSettings.players)
       {
         console.log(player.nametag)
-        if (characters.indexOf(character[0]) == player.characterId && (isNaN(character[1]) || character[1] == player.characterColor))
+        if (characters.indexOf(character[0]) == player.characterId && (character[1]===null || character[1] == player.characterColor))
         {
           player_character = player.characterId
           break loop
@@ -131,7 +131,7 @@ function updateMelee(gameSettings)
 function updateStocks(stocks)
 {
     outputStocks = []
-    stocks.forEach((stock) => {if (!isNaN(stock)) outputStocks.push(stock)})
+    stocks.forEach((stock) => {if (stock || stock == 0) outputStocks.push(stock)})
 
     globalActivity["state"] = `Stocks: ${outputStocks.join(" - ")}`
     updatePresence(globalActivity)
