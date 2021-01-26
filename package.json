@@ -1,0 +1,26 @@
+{
+  "name": "slippi-discord-rpc",
+  "version": "1.0.0",
+  "description": "Simple Super Smash Bros. Melee Discord Rich presence using Project Slippi!",
+  "main": "main.js",
+  "dependencies": {
+    "@vinceau/slp-realtime": "^3.1.0",
+    "discord-rpc": "^3.1.4",
+    "package": "^1.0.1",
+    "rxjs": "^6.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konata-chan404/slippi-discord-rpc.git"
+  },
+  "author": "konata-chan404",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konata-chan404/slippi-discord-rpc/issues"
+  },
+  "homepage": "https://github.com/konata-chan404/slippi-discord-rpc#readme"
+}
