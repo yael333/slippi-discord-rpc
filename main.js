@@ -158,26 +158,26 @@ realtime.game.start$.subscribe((payload) => {
     payload.players.forEach(player => {stocks[player.playerIndex] = player.startStocks})
     updateMelee(payload);
     updateStocks(stocks)
-});
+  }, err => console.error(err));
 
 
 realtime.stock.countChange$.subscribe((payload) => {
     stocks[payload.playerIndex] = payload.stocksRemaining
     updateStocks(stocks)
     console.log(stocks)
-  });
+  }, err => console.error(err));
 
 realtime.game.end$.subscribe(() => {
     updateMelee(null)
     stocks = []
-  });
+  }, err => console.error(err));
 
 stream.connection.on("statusChange", (status) => {
     if (status === ConnectionStatus.DISCONNECTED) {
       updateMelee(null)
       stocks = []
     }
-  });
+  }, err => console.error(err));
 
 client.login({ clientId }).catch(console.error);
 stream.start("127.0.0.1", Ports.DEFAULT).then(() => {console.log("Connected to Slippi Relay"); startTime = new Date()}).catch("Couldn't find a dolphin instance!");
