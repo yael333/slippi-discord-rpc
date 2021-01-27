@@ -1,5 +1,6 @@
 const { SlpRealTime, SlpLiveStream, ConnectionStatus} = require("@vinceau/slp-realtime");
 const { Ports } = require("@slippi/slippi-js");
+const { catchError } = require("rxjs/operators");
 const RPC = require("discord-rpc");
 const fs = require("fs");
 
@@ -68,6 +69,15 @@ const stages =
   "Battlefield",
   "Final Destination"
 ]
+
+function connectSlippi(stream)
+{
+  stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
+  {
+    console.log("Connected to Slippi Relay"); 
+    return
+  }).catch((err) => {console.log("Couldn't find a dolphin instance! retrying.."); connectSlippi(stream)})
+}
 
 function updatePresence(activity)
 {
@@ -141,6 +151,7 @@ const clientId = '635924792893112320';
 const client = new RPC.Client({ transport: 'ipc' });
 
 globalActivity = {}
+startTime = new Date();
 
 client.on('ready', () => {
 console.log("Connected to discord!")
@@ -153,31 +164,43 @@ const stream = new SlpLiveStream("dolphin");
 
 const realtime = new SlpRealTime();
 realtime.setStream(stream);
-realtime.game.start$.subscribe((payload) => {
+realtime.game.start$
+  .pipe(catchError(err => of([])))
+
+  .subscribe((payload) => {
     stocks = []
     payload.players.forEach(player => {stocks[player.playerIndex] = player.startStocks})
     updateMelee(payload);
     updateStocks(stocks)
-  }, err => console.error(err));
+  });
 
 
-realtime.stock.countChange$.subscribe((payload) => {
+realtime.stock.countChange$
+  .pipe(catchError(err => of([])))
+
+  .subscribe((payload) => {
     stocks[payload.playerIndex] = payload.stocksRemaining
     updateStocks(stocks)
     console.log(stocks)
-  }, err => console.error(err));
+  });
 
-realtime.game.end$.subscribe(() => {
+realtime.game.end$
+  .pipe(catchError(err => of([])))
+
+  .subscribe(() => {
     updateMelee(null)
     stocks = []
-  }, err => console.error(err));
+  });
 
 stream.connection.on("statusChange", (status) => {
     if (status === ConnectionStatus.DISCONNECTED) {
+      console.log("Slippi Relay disconnected!")
       updateMelee(null)
       stocks = []
+      connectSlippi(stream)
     }
-  }, err => console.error(err));
+  });
 
-client.login({ clientId }).catch(console.error);
-stream.start("127.0.0.1", Ports.DEFAULT).then(() => {console.log("Connected to Slippi Relay"); startTime = new Date()}).catch("Couldn't find a dolphin instance!");
+
+connectSlippi(stream)
+client.login({ clientId }).catch(err => console.log(err));
