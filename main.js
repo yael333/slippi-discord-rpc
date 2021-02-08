@@ -131,6 +131,8 @@ function updateMelee(gameSettings)
     details : config["menu_text"],
     startTimestamp : startTime,
     largeImageKey : 'menu',
+    matchSecret : config["code"],
+    joinSecret: "join"
     }
 }
 
@@ -159,38 +161,44 @@ updateMelee(null)
 });
 
 
+client.subscribe('ACTIVITY_JOIN_REQUEST', ({ user }) => {
+  console.log(user.username, "is requesting to join!");
+}).catch(e => {})
+
+client.subscribe('ACTIVITY_JOIN', ({ secret }) => {
+  console.log('Game Join Request', secret).catch("hello");
+}).catch(e => {})
+
+
 const stream = new SlpLiveStream("dolphin");
 
 
 const realtime = new SlpRealTime();
 realtime.setStream(stream);
 realtime.game.start$
-  .pipe(catchError(err => of([])))
-
   .subscribe((payload) => {
     stocks = []
     payload.players.forEach(player => {stocks[player.playerIndex] = player.startStocks})
     updateMelee(payload);
     updateStocks(stocks)
-  });
+  },
+  err => (console.log("oops ", err.message)));
 
 
 realtime.stock.countChange$
-  .pipe(catchError(err => of([])))
-
   .subscribe((payload) => {
     stocks[payload.playerIndex] = payload.stocksRemaining
     updateStocks(stocks)
     console.log(stocks)
-  });
+  },
+  err => (console.log("oops ", err.message)));
 
 realtime.game.end$
-  .pipe(catchError(err => of([])))
-
   .subscribe(() => {
     updateMelee(null)
     stocks = []
-  });
+  },
+  err => (console.log("oops ", err.message)));
 
 stream.connection.on("statusChange", (status) => {
     if (status === ConnectionStatus.DISCONNECTED) {
