@@ -181,7 +181,7 @@ realtime.game.start$
     payload.players.forEach(player => {stocks[player.playerIndex] = player.startStocks})
     updateMelee(payload);
     updateStocks(stocks)
-  }).catch(e => {});
+  })
 
 
 realtime.stock.countChange$
@@ -189,13 +189,13 @@ realtime.stock.countChange$
     stocks[payload.playerIndex] = payload.stocksRemaining
     updateStocks(stocks)
     console.log(stocks)
-  }).catch(e => {});
+  })
 
 realtime.game.end$
   .subscribe(() => {
     updateMelee(null)
     stocks = []
-  }).catch(e => {});
+  })
 
 stream.connection.on("statusChange", (status) => {
     if (status === ConnectionStatus.DISCONNECTED) {
