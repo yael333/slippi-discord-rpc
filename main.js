@@ -132,9 +132,9 @@ function updateMelee(gameSettings)
     details : config["menu_text"],
     startTimestamp : startTime,
     largeImageKey : 'menu',
-    matchSecret : lobby.secret,
-    joinSecret: config["code"],
-    partyId: config["code"]+"-lobby",
+    matchSecret : config["code"],
+    joinSecret: config["code"]+'-join',
+    partyId: config["code"]+'-party',
     partySize: 1,
     partyMax: 2,
     instance: true
