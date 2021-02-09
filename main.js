@@ -133,8 +133,8 @@ function updateMelee(gameSettings)
     startTimestamp : startTime,
     largeImageKey : 'menu',
     matchSecret : config["code"],
-    joinSecret: config["code"]+'-join',
-    partyId: config["code"]+'-party',
+    joinSecret: 'join',
+    partyId: 'party',
     partySize: 1,
     partyMax: 2,
     instance: true
