@@ -131,8 +131,8 @@ function updateMelee(gameSettings)
     details : config["menu_text"],
     startTimestamp : startTime,
     largeImageKey : 'menu',
-    matchSecret : config["code"],
-    joinSecret: "join",
+    matchSecret : "match",
+    joinSecret: config["code"],
     partyId: 'party1234',
     partySize: 1,
     partyMax: 2,
@@ -169,7 +169,7 @@ client.subscribe('ACTIVITY_JOIN_REQUEST', ({ user }) => {
 }).catch(e => {})
 
 client.subscribe('ACTIVITY_JOIN', ({ secret }) => {
-  console.log('Game Join Request', secret);
+  console.log('Game Join Request');
 }).catch(e => {})
 
 
