@@ -132,12 +132,6 @@ function updateMelee(gameSettings)
     details : config["menu_text"],
     startTimestamp : startTime,
     largeImageKey : 'menu',
-    matchSecret : config["code"],
-    joinSecret: 'join',
-    partyId: 'party',
-    partySize: 1,
-    partyMax: 2,
-    instance: true
     }
 }
 
@@ -164,15 +158,6 @@ client.on('ready', () => {
 console.log("Connected to discord!")
 updateMelee(null)
 });
-
-
-client.subscribe('ACTIVITY_JOIN_REQUEST', ({ user }) => {
-  client.sendJoinInvite(user.id);
-}).catch(e => {})
-
-client.subscribe('ACTIVITY_JOIN', ({ secret }) => {
-  console.log('Game Join Request');
-}).catch(e => {})
 
 
 const stream = new SlpLiveStream("dolphin");
