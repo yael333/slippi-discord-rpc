@@ -118,7 +118,7 @@ function updateMelee(gameSettings)
 
     globalActivity =  {
         details : outputTeams.join(" vs "),
-        startTimestamp : new Date(),
+        endTimestamp : new Date(new Date().getTime() + 8*60000),
         largeImageKey : gameSettings.stageId.toString() + "_map",
         largeImageText : stages[gameSettings.stageId],
         smallImageKey : player_character.toString() + (config["ssbu_logos"] ? "" : "_old"),
@@ -132,7 +132,10 @@ function updateMelee(gameSettings)
     startTimestamp : startTime,
     largeImageKey : 'menu',
     matchSecret : config["code"],
-    joinSecret: "join"
+    joinSecret: "join",
+    partyId: 'party1234',
+    partySize: 1,
+    partyMax: 2,
     }
 }
 
@@ -162,11 +165,11 @@ updateMelee(null)
 
 
 client.subscribe('ACTIVITY_JOIN_REQUEST', ({ user }) => {
-  console.log(user.username, "is requesting to join!");
+  client.sendJoinInvite(user.id);
 }).catch(e => {})
 
 client.subscribe('ACTIVITY_JOIN', ({ secret }) => {
-  console.log('Game Join Request', secret).catch("hello");
+  console.log('Game Join Request', secret);
 }).catch(e => {})
 
 
