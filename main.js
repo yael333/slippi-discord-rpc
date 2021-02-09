@@ -127,15 +127,17 @@ function updateMelee(gameSettings)
   }
   else
   {
+    lobby = client.createLobby(2, 10, {})
     globalActivity = {
     details : config["menu_text"],
     startTimestamp : startTime,
     largeImageKey : 'menu',
-    matchSecret : "match",
+    matchSecret : lobby.secret,
     joinSecret: config["code"],
-    partyId: 'party1234',
+    partyId: config["code"]+"-lobby",
     partySize: 1,
     partyMax: 2,
+    instance: true
     }
 }
 
