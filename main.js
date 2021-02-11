@@ -3,6 +3,7 @@ const { Ports } = require("@slippi/slippi-js");
 const { catchError } = require("rxjs/operators");
 const RPC = require("discord-rpc");
 const fs = require("fs");
+const { exit } = require("process");
 
 const characters =
 [
@@ -70,13 +71,13 @@ const stages =
   "Final Destination"
 ]
 
-function connectSlippi(stream)
+function connectSlippi(m_stream)
 {
-  stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
+  m_stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
   {
     console.log("Connected to Slippi Relay"); 
     return
-  }).catch((err) => {console.log("Couldn't find a dolphin instance! retrying.."); connectSlippi(stream)})
+  }).catch((err) => {console.log("Couldn't find a dolphin instance! quitting.."); connectSlippi()})
 }
 
 function updatePresence(activity)
@@ -186,6 +187,7 @@ realtime.game.end$
     updateMelee(null)
     stocks = []
   })
+
 
 stream.connection.on("statusChange", (status) => {
     if (status === ConnectionStatus.DISCONNECTED) {
