@@ -188,7 +188,7 @@ realtime.game.end$
     stocks = []
   })
 
-stream.connection.on("error", (err) => {});
+stream.connection.on("error", (err) => {console.log(err)});
 
 
 stream.connection.on("statusChange", (status) => {
