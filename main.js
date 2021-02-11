@@ -71,13 +71,13 @@ const stages =
   "Final Destination"
 ]
 
-function connectSlippi(m_stream)
+function connectSlippi(stream)
 {
-  m_stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
+  stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
   {
     console.log("Connected to Slippi Relay"); 
     return
-  }).catch((err) => {console.log("Couldn't find a dolphin instance! quitting.."); connectSlippi()})
+  }).catch((err) => {console.log("Couldn't find a dolphin instance! quitting.."); exit()})
 }
 
 function updatePresence(activity)
@@ -187,6 +187,8 @@ realtime.game.end$
     updateMelee(null)
     stocks = []
   })
+
+stream.connection.on("error", (err) => {});
 
 
 stream.connection.on("statusChange", (status) => {
