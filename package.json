@@ -5,7 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "@vinceau/slp-realtime": "^3.1.0",
-    "discord-rpc": "^3.1.4",
+    "discord-rpc": "^3.2.0",
     "package": "^1.0.1",
     "rxjs": "^6.6.3"
   },

@@ -73,10 +73,9 @@ const stages =
 
 function connectSlippi(stream)
 {
-  stream.start("127.0.0.1", Ports.DEFAULT).then(() => 
+  stream.start("127.0.0.1", Ports.DEFAULT).then(() => // dont be dumb and forget port thingy 
   {
     console.log("Connected to Slippi Relay"); 
-    return
   }).catch((err) => {console.log("Couldn't find a dolphin instance! quitting.."); exit()})
 }
 
@@ -119,7 +118,7 @@ function updateMelee(gameSettings)
 
     globalActivity =  {
         details : outputTeams.join(" vs "),
-        endTimestamp : new Date(new Date().getTime() + 8*60000),
+        endTimestamp : new Date(new Date().getTime() + 8.05*60000),
         largeImageKey : gameSettings.stageId.toString() + "_map",
         largeImageText : stages[gameSettings.stageId],
         smallImageKey : player_character.toString() + (config["ssbu_logos"] ? "" : "_old"),
@@ -128,7 +127,6 @@ function updateMelee(gameSettings)
   }
   else
   {
-    lobby = client.createLobby(2, 10, {})
     globalActivity = {
     details : config["menu_text"],
     startTimestamp : startTime,
@@ -153,7 +151,7 @@ const clientId = '635924792893112320';
 const client = new RPC.Client({ transport: 'ipc' });
 
 globalActivity = {}
-startTime = new Date();
+const startTime = new Date();
 
 client.on('ready', () => {
 console.log("Connected to discord!")
@@ -188,7 +186,7 @@ realtime.game.end$
     stocks = []
   })
 
-stream.connection.on("error", (err) => {console.log(err)});
+stream.connection.on("error", (err) => {});
 
 
 stream.connection.on("statusChange", (status) => {
