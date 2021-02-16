@@ -118,7 +118,7 @@ function updateMelee(gameSettings)
 
     globalActivity =  {
         details : outputTeams.join(" vs "),
-        endTimestamp : new Date(new Date().getTime() + 8.05*60000),
+        endTimestamp : new Date(new Date().getTime() + 8.03*60000),
         largeImageKey : gameSettings.stageId.toString() + "_map",
         largeImageText : stages[gameSettings.stageId],
         smallImageKey : player_character.toString() + (config["ssbu_logos"] ? "" : "_old"),
@@ -167,17 +167,23 @@ realtime.setStream(stream);
 realtime.game.start$
   .subscribe((payload) => {
     stocks = []
+    if (payload)
+    {
     payload.players.forEach(player => {stocks[player.playerIndex] = player.startStocks})
     updateMelee(payload);
     updateStocks(stocks)
+    }
   })
 
 
 realtime.stock.countChange$
   .subscribe((payload) => {
-    stocks[payload.playerIndex] = payload.stocksRemaining
-    updateStocks(stocks)
-    console.log(stocks)
+    if (payload)
+    {
+      stocks[payload.playerIndex] = payload.stocksRemaining
+      updateStocks(stocks)
+      console.log(stocks)
+    }
   })
 
 realtime.game.end$
