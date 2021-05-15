@@ -1,6 +1,10 @@
 {
-    "characters" : [["Ice Climbers", null], ["Falco", 2], ["Captain Falcon", null]],
-    "ssbu_logos" : false,
+    "code" : "KONA#607",
+    "player_string" : "%NICK% (%SHORT%)",
+    "icon_character_color" : true,
+    "icon_character_ssbu" : false,
     "menu_text" : "Menu beep boop",
-    "code" : "KONA#666"
+    "menu_image_text" : "melee?", 
+    "opponent_seperator" : " vs. ",
+    "teams_seperator" : " and "
 }

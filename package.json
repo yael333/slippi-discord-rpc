@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Simple Super Smash Bros. Melee Discord Rich presence using Project Slippi!",
   "main": "main.js",
+  "bin": "main.js",
   "dependencies": {
-    "@vinceau/slp-realtime": "^3.1.0",
+    "@slippi/slippi-js": "^6.0.1",
+    "@vinceau/slp-realtime": "^3.1.1",
     "discord-rpc": "^3.2.0",
-    "package": "^1.0.1",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.7"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
