@@ -1,6 +1,8 @@
 # slippi-discord-rpc
 Simple Super Smash Bros. Melee Discord Rich Presence using Project Slippi!
 
+![showcase](https://github.com/konata-chan404/slippi-discord-rpc/blob/main/assets/showcase.png)
+
 ### code is very bad dont judge :3
 
 ## Usage
