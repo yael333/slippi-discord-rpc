@@ -3,7 +3,7 @@
     "player_string" : "%NICK% (%SHORT%)",
     "icon_character_color" : true,
     "icon_character_ssbu" : false,
-    "menu_text" : "Menu beep boop",
+    "menu_text" : "why am i playing this game?",
     "menu_image_text" : "melee?", 
     "opponent_seperator" : " vs. ",
     "teams_seperator" : " and "

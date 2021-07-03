@@ -41,20 +41,16 @@ function updateMelee(gameSettings) {
 			if (team[0]) outputTeams.push(team.join(config["teams_seperator"]))
 		})
 
-		player_character = gameSettings.players.find(player => player.connectCode == config["code"])
-		if (!player_character) {
-			player_character = gameSettings.players[0]
-		}
-		player_character = player_character
+		player_character = gameSettings.players.find(player => player.connectCode == config["code"]) || gameSettings.players[0]
 
 		globalActivity = {
 			details: outputTeams.join(config["opponent_seperator"]),
 			startTimestamp: new Date(),
 			endTimestamp: new Date(new Date()
 				.getTime() + 8.03 * 60000),
-			largeImageKey: gameSettings.stageId.toString() + "_map",
+			largeImageKey: (stages.getStageName(gameSettings.stageId) == "Unknown Stage" ? "custom" : gameSettings.stageId.toString()) + "_map",
 			largeImageText: stages.getStageName(gameSettings.stageId),
-			smallImageKey: config["icon_character_ssbu"] ? player_character.characterId.toString() : characters.getCharacterName(player_character.characterId).replace(".", "").replace(" & ", "_").toLowerCase().replace(" ", "_") + "-" + (config["icon_character_color"] ? characters.getCharacterColorName(player_character.characterId, player_character.characterColor).toLowerCase().replace(" ", "_") : "default"),
+			smallImageKey: config["icon_character_ssbu"] ? player_character.characterId.toString() : characters.getCharacterName(player_character.characterId).replace(".", "").replace(" & ", "_").toLowerCase().replace(" ", "_") + "-" + (config["icon_character_color"] ? (characters.getCharacterColorName(player_character.characterId, player_character.characterColor) || "Default").toLowerCase().replace(" ", "_") : "default"),
 			smallImageText: characters.getCharacterName(player_character.characterId),
 		}
 	} else {
@@ -96,7 +92,7 @@ globalActivity = {}
 const startTime = new Date();
 
 client.on('ready', () => {
-	console.log("Connected to discord!")
+	console.log("Connected to Discord!")
 	updateMelee(null)
 });
 
@@ -156,6 +152,6 @@ client.login({
 		clientId
 	})
 	.catch(err => {
-		console.log("Can't connect to discord. qutting...");
+		console.log("Can't connect to Discord. qutting...");
 		exit();
 	});
