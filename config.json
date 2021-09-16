@@ -4,7 +4,7 @@
     "icon_character_color" : true,
     "icon_character_ssbu" : false,
     "menu_text" : "why am i playing this game?",
-    "menu_image_text" : "melee?", 
+    "menu_image_text" : "wow this is melee", 
     "opponent_seperator" : " vs. ",
     "teams_seperator" : " and "
 }
